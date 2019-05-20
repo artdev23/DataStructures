@@ -1,15 +1,18 @@
 package struct;
 
 
+import alg.ArraySort;
+
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.function.Consumer;
 
 import static java.lang.System.arraycopy;
-import static java.util.Arrays.stream;
+import static java.util.Arrays.*;
 
 
-public class DynArray<E>
-		implements Iterable<E>
+public class DynArray<E extends Object & Comparable<? super E>>
+		implements Iterable<E>, Cloneable
 {
 
   private E[] elem;
@@ -24,6 +27,19 @@ public class DynArray<E>
 
 	elem = (E[]) new Object[size];
 	this.size = size;
+  }
+
+
+  public DynArray(E[] array)
+  {
+	if (array == null)
+	  throw new IllegalArgumentException("array is null");
+
+	if (array.length == 0)
+	  throw new IllegalArgumentException("array is empty");
+
+	elem = copyOf(array, array.length);
+	size = array.length;
   }
 
 
@@ -43,7 +59,30 @@ public class DynArray<E>
   }
 
 
-  // поиск элемента
+  public void sort(Consumer<E[]> alg)
+  {
+	alg.accept(elem);
+  }
+
+
+  public void insertionSort()
+  {
+	ArraySort.insertionSort(elem);
+  }
+
+
+  public void selectionSort()
+  {
+	ArraySort.selectionSort(elem);
+  }
+
+
+  public void bubbleSort()
+  {
+	ArraySort.bubbleSort(elem);
+  }
+
+
   public int indexOf(E e)
   {
 	for (int i = 0; i < size; i++)
@@ -128,6 +167,13 @@ public class DynArray<E>
   public Iterator<E> iterator()
   {
 	return stream(elem).iterator();
+  }
+
+
+  @Override
+  public DynArray<E> clone()
+  {
+	return new DynArray<>(elem);
   }
 
 
