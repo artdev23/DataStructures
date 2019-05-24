@@ -7,7 +7,7 @@ import static java.lang.System.*;
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
 
 
-public class Main
+public class Sort
 {
 
   public static void main(String[] args)

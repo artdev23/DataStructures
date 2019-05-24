@@ -1,10 +1,13 @@
 package alg;
 
 
-public interface ArraySort
+import static alg.ArrayUtils.swap;
+
+
+public final class ArraySort
 {
 
-  static <E extends Object & Comparable<? super E>>
+  public static <E extends Object & Comparable<? super E>>
   void insertionSort(E[] a)
   {
 	int n = a.length;
@@ -25,7 +28,7 @@ public interface ArraySort
   }
 
 
-  static <E extends Object & Comparable<? super E>>
+  public static <E extends Object & Comparable<? super E>>
   void selectionSort(E[] a)
   {
 	int n = a.length;
@@ -39,17 +42,12 @@ public interface ArraySort
 		  min = j;
 	  }
 
-	  if (min == i)
-		continue;
-
-	  E temp = a[i];
-	  a[i] = a[min];
-	  a[min] = temp;
+	  swap(a, i, min);
 	}
   }
 
 
-  static <E extends Object & Comparable<? super E>>
+  public static <E extends Object & Comparable<? super E>>
   void bubbleSort(E[] a)
   {
 	int n = a.length;
@@ -60,13 +58,9 @@ public interface ArraySort
 	  sorted = true;
 	  for (int i = 1; i < n; i++)
 	  {
-		if (a[i].compareTo(a[i - 1]) < 0)
-		{
-		  E temp = a[i];
-		  a[i] = a[i - 1];
-		  a[i - 1] = temp;
-		  sorted = false;
-		}
+		if (a[i].compareTo(a[i - 1]) >= 0) continue;
+		swap(a, i, i - 1);
+		sorted = false;
 	  }
 	}
   }
