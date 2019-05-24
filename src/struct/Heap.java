@@ -1,6 +1,9 @@
 package struct;
 
 
+import static java.lang.Math.floor;
+
+
 public class Heap<E extends Comparable<? super E>>
 {
 
@@ -19,9 +22,22 @@ public class Heap<E extends Comparable<? super E>>
   }
 
 
+  public void insert(E key)
+  {
+	A.add(key);
+	int i = A.size();
+
+	while (i > 1 && A.get(parent(i)).compareTo(A.get(i)) < 0)
+	{
+	  A.swap(i, parent(i));
+	  i = parent(i);
+	}
+  }
+
+
   public E extractMax()
   {
-	if (A.size() < 1)
+	if (isEmpty())
 	  throw new UnderflowException();
 
 	E max = A.get(1);
@@ -33,6 +49,12 @@ public class Heap<E extends Comparable<? super E>>
 	maxHeapify(1);
 
 	return max;
+  }
+
+
+  public boolean isEmpty()
+  {
+	return A.size() < 1;
   }
 
 
@@ -55,7 +77,13 @@ public class Heap<E extends Comparable<? super E>>
 	  A.swap(i, largest);
 	  maxHeapify(largest);
 	}
+  }
 
+
+  private int parent(int i)
+  {
+	float h = i / 2f;
+	return (int) floor(h);
   }
 
 

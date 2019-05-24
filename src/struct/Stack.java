@@ -43,6 +43,12 @@ public class Stack<E extends Comparable<? super E>>
   }
 
 
+  public int size()
+  {
+	return S.size();
+  }
+
+
   public static class UnderflowException
 		  extends RuntimeException
   {
