@@ -4,14 +4,14 @@ package struct;
 public class Deque<E extends Comparable<? super E>>
 {
 
-  private Stack<E> leftStack;
-  private Stack<E> rightStack;
+  private ArrayStack<E> leftStack;
+  private ArrayStack<E> rightStack;
 
 
   public Deque()
   {
-	leftStack = new Stack<>();
-	rightStack = new Stack<>();
+	leftStack = new ArrayStack<>();
+	rightStack = new ArrayStack<>();
   }
 
 
@@ -29,7 +29,7 @@ public class Deque<E extends Comparable<? super E>>
 	if (!leftStack.isEmpty())
 	  return leftStack.pop();
 
-	Stack<E> st = new Stack<>();
+	ArrayStack<E> st = new ArrayStack<>();
 
 	for (int i = 0; i <= rightStack.size() / 2; i++)
 	{
@@ -65,7 +65,7 @@ public class Deque<E extends Comparable<? super E>>
 	if (!rightStack.isEmpty())
 	  return rightStack.pop();
 
-	Stack<E> st = new Stack<>();
+	ArrayStack<E> st = new ArrayStack<>();
 
 	for (int i = 0; i <= leftStack.size() / 2; i++)
 	{

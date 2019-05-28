@@ -1,7 +1,7 @@
 package alg;
 
 
-import struct.Stack;
+import struct.ArrayStack;
 
 
 public final class ArrayUtils
@@ -11,7 +11,7 @@ public final class ArrayUtils
   void reverse(E[] array)
   {
 	int last = array.length - 1;
-	Stack<E> st = new Stack<>();
+	ArrayStack<E> st = new ArrayStack<>();
 
 	for (int i = 0; i <= last; i++)
 	{

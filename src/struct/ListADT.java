@@ -1,8 +1,14 @@
 package struct;
 
 
-public interface List<E>
+import java.util.function.Consumer;
+
+
+public interface ListADT<E>
+		extends Iterable<E>
 {
+
+  void iterate(Consumer<E> action);
 
   boolean contains(E val);
 
@@ -27,6 +33,11 @@ public interface List<E>
   void deleteBefore(E before);
 
 
+  void clear();
+
+
   boolean isEmpty();
+
+  int size();
 
 }
