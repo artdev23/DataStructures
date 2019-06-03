@@ -1,7 +1,8 @@
 package struct;
 
 
-public class Stack<E extends Comparable<? super E>>
+public class ArrayStack<E extends Comparable<? super E>>
+		implements StackADT<E>
 {
 
   private DynArray<E> S;
@@ -10,13 +11,14 @@ public class Stack<E extends Comparable<? super E>>
   private static final int DEFAULT_ARRAY_CAPACITY = 100;
 
 
-  public Stack()
+  public ArrayStack()
   {
 	S = new DynArray<>(DEFAULT_ARRAY_CAPACITY);
 	top = 0;
   }
 
 
+  @Override
   public void push(E val)
   {
 	S.insert(val, top + 1);
@@ -24,6 +26,7 @@ public class Stack<E extends Comparable<? super E>>
   }
 
 
+  @Override
   public E pop()
   {
 	if (isEmpty())
@@ -37,27 +40,18 @@ public class Stack<E extends Comparable<? super E>>
   }
 
 
+  @Override
   public boolean isEmpty()
   {
 	return top == 0;
   }
 
 
+  @Override
   public int size()
   {
 	return S.size();
   }
 
-
-  public static class UnderflowException
-		  extends RuntimeException
-  {
-
-	UnderflowException()
-	{
-	  super("Стек опустошен");
-	}
-
-  }
 
 }

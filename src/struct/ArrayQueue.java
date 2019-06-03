@@ -1,7 +1,7 @@
 package struct;
 
 
-public class Queue<E extends Comparable<? super E>>
+public class ArrayQueue<E extends Comparable<? super E>>
 		implements QueueADT<E>
 {
 
@@ -12,7 +12,7 @@ public class Queue<E extends Comparable<? super E>>
   private static final int DEFAULT_ARRAY_CAPACITY = 100;
 
 
-  public Queue()
+  public ArrayQueue()
   {
 	Q = new DynArray<>(DEFAULT_ARRAY_CAPACITY);
 	head = 1;
