@@ -2,6 +2,7 @@ package alg;
 
 
 import java.math.BigInteger;
+import java.util.Random;
 
 import static java.lang.System.out;
 import static java.math.BigInteger.valueOf;
@@ -27,6 +28,15 @@ public final class NumericAlgorithm
 	  p = p.multiply(num);
 	  return p;
 	}
+  }
+
+
+  public static int nextIntFromRange(Random r, int min, int max)
+  {
+	if (min >= max)
+	  throw new IllegalArgumentException("max must be greater than min");
+
+	return r.nextInt((max - min) + 1) + min;
   }
 
 

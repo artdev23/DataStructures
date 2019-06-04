@@ -3,6 +3,8 @@ package struct;
 
 import java.util.function.Consumer;
 
+import static java.lang.Math.*;
+
 
 public class BinaryTree<K extends Comparable<? super K>, E>
 {
@@ -15,6 +17,12 @@ public class BinaryTree<K extends Comparable<? super K>, E>
   {
 	root = null;
 	size = 0;
+  }
+
+
+  public int size()
+  {
+	return size;
   }
 
 
@@ -78,6 +86,55 @@ public class BinaryTree<K extends Comparable<? super K>, E>
   public boolean isEmpty()
   {
 	return root == null;
+  }
+
+
+  public int depth()
+  {
+	return depth(root);
+  }
+
+
+  private int depth(BinaryTreeNode<K, E> node)
+  {
+	if (node == null)
+	  return -1;
+
+	int depthLeft = depth(node.left);
+	int depthRight = depth(node.right);
+
+	return 1 + max(depthLeft, depthRight);
+  }
+
+
+  public boolean isBalanced()
+  {
+	if (isEmpty())
+	  return true;
+
+	return isBalanced(root);
+  }
+
+
+  private boolean isBalanced(BinaryTreeNode<K, E> node)
+  {
+	if (node == null)
+	  return true;
+
+	if (abs(height(node.left) - height(node.right)) > 1)
+	  return false;
+
+	return isBalanced(node.left) &&
+		   isBalanced(node.right);
+  }
+
+
+  private int height(BinaryTreeNode<K, E> node)
+  {
+	if (node == null)
+	  return 0;
+
+	return 1 + max(height(node.left), height(node.right));
   }
 
 
@@ -145,7 +202,7 @@ public class BinaryTree<K extends Comparable<? super K>, E>
   }
 
 
-  private BinaryTreeNode<K, E> minimum()
+  protected BinaryTreeNode<K, E> minimum()
   {
 	BinaryTreeNode<K, E> x = root;
 
@@ -207,6 +264,9 @@ public class BinaryTree<K extends Comparable<? super K>, E>
 
   protected void depthFirst(Consumer<E> action)
   {
+	if (isEmpty())
+	  return;
+
 	QueueADT<BinaryTreeNode<K, E>> children = new ListQueue<>();
 
 	children.enqueue(root);
@@ -241,6 +301,7 @@ public class BinaryTree<K extends Comparable<? super K>, E>
 	BinaryTreeNode<K, T> left;
 	BinaryTreeNode<K, T> right;
 	BinaryTreeNode<K, T> parent;
+	int level;
 
 
 	BinaryTreeNode(K _key, T _value)
