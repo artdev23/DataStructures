@@ -10,6 +10,21 @@ public class Graph<E>
   private ListADT<Node> nodes;
 
 
+  public Graph()
+  {
+	nodes = new TwoWayLinkedList<>();
+  }
+
+
+  public Node createVertex(E obj)
+  {
+	Node node = new Node(obj);
+	nodes.insertFirst(node);
+
+	return node;
+  }
+
+
   public void iterate(Consumer<E> action, IterType type)
   {
 	switch (type)
@@ -37,10 +52,26 @@ public class Graph<E>
 	for (Node v : nodes)
 	{
 	  if (!v.visited)
+	  {
+		nodes.iterate(x -> x.visited = false);
 		return false;
+	  }
 	}
 
+	nodes.iterate(x -> x.visited = false);
 	return true;
+  }
+
+
+  public ListADT<Node> getShortestPath(Node from, Node to)
+  {
+	if (to == from)
+	  throw new IllegalArgumentException("вершины не должны совпадать");
+
+	breadthFirst(from, null);
+	ListADT<Node> path = buildPath(from, to);
+
+	return path;
   }
 
 
@@ -108,7 +139,36 @@ public class Graph<E>
   }
 
 
-  private class Node
+  private ListADT<Node> buildPath(Node from, Node to)
+  {
+	ListADT<Node> path = new TwoWayLinkedList<>();
+
+	if (to == from)
+	{
+	  path.insertFirst(from);
+	  return path;
+	}
+
+	if (to.pred == null)
+	  return null;
+
+	Node curr = to;
+	do
+	{
+	  path.insertFirst(curr);
+	  curr = curr.pred;
+	  if (curr == null)
+		return null;
+	}
+	while (curr != from);
+
+	path.insertFirst(from);
+
+	return path;
+  }
+
+
+  public class Node
   {
 
 	ListADT<Link> links;
@@ -117,6 +177,34 @@ public class Graph<E>
 	boolean visited;
 	long dist;
 
+
+	Node(E e)
+	{
+	  obj = e;
+	  links = new TwoWayLinkedList<>();
+	}
+
+
+	public void connectWith(Node node)
+	{
+	  for (Link l : links)
+	  {
+		if (l.node2 == node)
+		  return;
+	  }
+
+	  Link link = new Link(this, node);
+	  links.insertFirst(link);
+	  node.links.insertFirst(link);
+	}
+
+
+	@Override
+	public String toString()
+	{
+	  return obj.toString();
+	}
+
   }
 
   private class Link
@@ -124,6 +212,13 @@ public class Graph<E>
 
 	Node node1;
 	Node node2;
+
+
+	Link(Node from, Node to)
+	{
+	  node1 = from;
+	  node2 = to;
+	}
 
   }
 
