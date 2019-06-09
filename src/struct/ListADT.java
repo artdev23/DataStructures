@@ -2,6 +2,7 @@ package struct;
 
 
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 
 public interface ListADT<E>
@@ -11,6 +12,8 @@ public interface ListADT<E>
   void iterate(Consumer<E> action);
 
   boolean contains(E val);
+
+  E find(Predicate<E> predicate);
 
 
   void insertFirst(E val);
@@ -31,6 +34,8 @@ public interface ListADT<E>
   void deleteAfter(E after);
 
   void deleteBefore(E before);
+
+  boolean tryDelete(E val);
 
 
   void clear();

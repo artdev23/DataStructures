@@ -3,6 +3,7 @@ package struct;
 
 import java.util.Iterator;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 
 public class SinglyLinkedList<E>
@@ -48,6 +49,13 @@ public class SinglyLinkedList<E>
   public boolean contains(E val)
   {
 	return find(val) != null;
+  }
+
+
+  @Override
+  public E find(Predicate<E> predicate)
+  {
+	return findBy(predicate).val;
   }
 
 
@@ -113,6 +121,20 @@ public class SinglyLinkedList<E>
 
 	deleteElem(elem.first, elem.second);
 	size--;
+  }
+
+
+  @Override
+  public boolean tryDelete(E val)
+  {
+	Pair<Node<E>, Node<E>> elem = findNodeAndBefore(val);
+
+	if (elem == null)
+	  return false;
+
+	deleteElem(elem.first, elem.second);
+	size--;
+	return true;
   }
 
 
@@ -205,11 +227,17 @@ public class SinglyLinkedList<E>
 
   protected Node<E> find(E val)
   {
+	return findBy(x -> x.equals(val));
+  }
+
+
+  protected Node<E> findBy(Predicate<E> p)
+  {
 	Node<E> x = head;
 
 	while (x != null)
 	{
-	  if (x.val.equals(val))
+	  if (p.test(x.val))
 		break;
 	  x = x.next;
 	}
