@@ -98,8 +98,7 @@ public class HashTable<K, V>
 
   public boolean isEmpty()
   {
-	return blocks.stream()
-				 .allMatch(ListADT::isEmpty);
+	return size == 0;
   }
 
 
