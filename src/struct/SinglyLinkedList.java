@@ -20,6 +20,7 @@ public class SinglyLinkedList<E>
   }
 
 
+  @Override
   public E first()
   {
 	return head.val;

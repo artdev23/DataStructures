@@ -38,6 +38,8 @@ public interface ListADT<E>
 
   boolean isEmpty();
 
+  E first();
+
   int size();
 
 }
